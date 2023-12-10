@@ -1,10 +1,10 @@
 # Now the second part of the puzzle spelled out digits also count
 
-file_path = "1dec\input1full.txt"
+file_path = "1dec\input2.txt"
 
 #one, two, three, four, five, six, seven, eight, and nine also count as valid "digits"
 words_that_mean_digits = ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
-first_letter_of_digits = [word[0] for word in words_that_mean_digits]
+first_letter_of_digits = ['o', 't', 'f','s', 'e', 'n']
 
 def get_first_and_last_digit(n_list): 
     first_digit = n_list[0]
@@ -76,22 +76,46 @@ with open(file_path, "r") as file:
         lines.append(line.strip())
 
 #
-# find the words that mean a number
-numbers =[]
+# find the words that mean a numberp
+#print(first_letter_of_digits)
+numbers = []
 for line in lines:
     #print(l)
-    for wor in words_that_mean_digits:
-        if wor in line:
-            #print(wor)
-            # replace the word with the number
-            line = line.replace(wor, convert_word_of_numbers_to_number(wor))
-            #print(line)
-    # Debug: print the line with the words replaced with numbers
-    #print(line)
-    numbers.append(get_first_and_last_digit(get_list_of_numbers(line)))
+    first = []
+    breakval = False
+    # find the first number
+    for char in line:
+        if char.isdigit():
+            first.append(char)
+            breakval = True
+        if char in first_letter_of_digits:
+            #check if char is a spelled out digit
+            ind = line.index(char)
+            if ind+5 < len(line):
+                substring = line[ind:ind+5]
+            elif ind+4 < len(line):
+                substring = line[ind:ind+4]
+            elif ind+3 < len(line):
+                substring = line[ind:ind+3]
+            else:
+                # no substing possible
+                breakval = True
+            #print(substring)
+            for word in words_that_mean_digits:
+                if word[0] == char and word in substring:
+                    first.append(convert_word_of_numbers_to_number(word))
+                    breakval = True
+
+        if breakval:
+            break
+
+    print(first)
+            
+
+
 
 #print(numbers)
-print(len(numbers))
-print(len(lines))
+#print(len(numbers))
+#print(len(lines))
 
-print(sum_list_of_strings(numbers))
+#print(sum_list_of_strings(numbers))
