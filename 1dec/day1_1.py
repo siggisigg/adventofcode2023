@@ -4,7 +4,7 @@
 #   combining the first digit and the last digit (in that order)
 #   to form a single two-digit number.
 ###
-file_path = "1dec\input1.txt"
+file_path = "1dec\input1full.txt"
 lines = []
 
 Dessired_output = [12, 38, 15, 77]
@@ -15,7 +15,7 @@ with open(file_path, "r") as file:
         lines.append(line.strip())
 
 # debug input print
-print(lines)
+#print(lines)
 
 
 # filter out characters that are not numbers
@@ -25,11 +25,10 @@ for line in lines:
     for char in line:
         if char.isdigit():
             tmp += char
-
     numbers.append(tmp)
 
 # debug print
-print([len(val) for val in numbers])
+#print([len(val) for val in numbers])
 
 # general solution
 def get_first_and_last_digit(n_list): 
@@ -41,6 +40,7 @@ def get_first_and_last_digit(n_list):
 # now get the first and last digit of each number in the numbers list
 only_first_and_last = []
 for n in numbers:
+    # optimizing run for digitis that already have 2 digits
     if len(n) > 2:
         only_first_and_last.append(get_first_and_last_digit(n))
     elif len(n) == 2:
@@ -51,7 +51,7 @@ for n in numbers:
         # no digit found
         print("Error")
 
-    #only_first_and_last.append(get_first_and_last_digit(n))
+    #only_first_and_last.append(get_first_and_last_digit(n)) # this is the same as the if statement above
 
 # debug print
 print(only_first_and_last)
